@@ -11,6 +11,9 @@ desis/
 ├── guardarProducto.php    # Procesamiento del formulario
 └── README.txt             # Este archivo
 
+VERSIÓN:
+PHP: 8.2.4
+
 INSTALACIÓN:
 
 
