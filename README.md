@@ -1,2 +1,0 @@
-# Desis
-Prueba Tecnica Desis
