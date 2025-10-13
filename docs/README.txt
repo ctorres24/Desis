@@ -13,7 +13,7 @@ desis/
 
 VERSIÓN:
 PHP: 8.2.4
-
+MySQL
 INSTALACIÓN:
 
 
