@@ -1,37 +1,124 @@
 $(document).ready(function () {
+    //Inicio 
+    // Se Crear flags para prevenir loops en validaciones Debido a que en navegadores como Safari
+    // el evento 'blur' puede dispararse múltiples veces si se generan alertas consecutivas.
+    
+    var validacionFlags = {
+        enProceso: false,          
+        alertaActiva: false,      
+        ultimaValidacion: 0,       
+        tiempoMinimo: 1000,         
+        validacionesActivas: {}   
+    };
+    
+    function puedeValidar(campo) {
+        var ahora = Date.now();
+        
+        if (validacionFlags.enProceso || validacionFlags.alertaActiva) {
+            return false;
+        }
+        
+        if ((ahora - validacionFlags.ultimaValidacion) < validacionFlags.tiempoMinimo) {
+            return false;
+        }
+        
+        if (validacionFlags.validacionesActivas[campo]) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    function iniciarValidacion(campo) {
+        validacionFlags.enProceso = true;
+        validacionFlags.validacionesActivas[campo] = true;
+        validacionFlags.ultimaValidacion = Date.now();
+    }
+    
+    function finalizarValidacion(campo, huboAlerta = false) {
+        validacionFlags.enProceso = false;
+        validacionFlags.validacionesActivas[campo] = false;
+        
+        if (huboAlerta) {
+            validacionFlags.alertaActiva = true;
+            setTimeout(function() {
+                validacionFlags.alertaActiva = false;
+            }, 2000);
+        }
+    }
+    
+    function resetearFlags() {
+        validacionFlags.enProceso = false;
+        validacionFlags.alertaActiva = false;
+        validacionFlags.validacionesActivas = {};
+        validacionFlags.ultimaValidacion = 0;
+    }
+
+
+    // Fin de las Flags Preventivas
+
     $('#bodega').change(function () {
         cambioSucursal();
     });
 
     $('#codigo').blur(function () {
-        validarCodigo();
+        if (puedeValidar('codigo')) {
+            iniciarValidacion('codigo');
+            var resultado = validarCodigo();
+            finalizarValidacion('codigo', !resultado);
+        }
     });
 
     $('#nombre').blur(function () {
-        validarNombre();
+        if (puedeValidar('nombre')) {
+            iniciarValidacion('nombre');
+            var resultado = validarNombre();
+            finalizarValidacion('nombre', !resultado);
+        }
     });
 
     $('#precio').blur(function () {
-        validarPrecio();
+        if (puedeValidar('precio')) {
+            iniciarValidacion('precio');
+            var resultado = validarPrecio();
+            finalizarValidacion('precio', !resultado);
+        }
     });
 
     $('#bodega').blur(function () {
-        validarBodega();
+        if (puedeValidar('bodega')) {
+            iniciarValidacion('bodega');
+            var resultado = validarBodega();
+            finalizarValidacion('bodega', !resultado);
+        }
     });
 
     $('#sucursal').blur(function () {
-        validarSucursal();
+        if (puedeValidar('sucursal')) {
+            iniciarValidacion('sucursal');
+            var resultado = validarSucursal();
+            finalizarValidacion('sucursal', !resultado);
+        }
     });
 
     $('#modeda').blur(function () {
-        validarMoneda();
+        if (puedeValidar('moneda')) {
+            iniciarValidacion('moneda');
+            var resultado = validarMoneda();
+            finalizarValidacion('moneda', !resultado);
+        }
     });
 
     $('#descripcion').blur(function () {
-        validarDescripcion();
+        if (puedeValidar('descripcion')) {
+            iniciarValidacion('descripcion');
+            var resultado = validarDescripcion();
+            finalizarValidacion('descripcion', !resultado);
+        }
     });
 
     $('form').submit(function (e) {
+        resetearFlags();
         var codigoValido = validarCodigo();
         var nombreValido = validarNombre();
         var precioValido = validarPrecio();
