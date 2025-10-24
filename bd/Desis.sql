@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 13-10-2025 a las 05:02:48
+-- Tiempo de generación: 24-10-2025 a las 22:32:25
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -79,10 +79,20 @@ CREATE TABLE `material_producto` (
 --
 
 INSERT INTO `material_producto` (`id`, `cod_producto`, `cod_material`) VALUES
+(9, '1EJAJBI7', 3),
+(10, '1EJAJBI7', 4),
+(11, '1EJAJBI7asd', 2),
+(12, '1EJAJBI7asd', 3),
+(13, 'a1EJAJBI7', 3),
+(14, 'a1EJAJBI7', 4),
 (1, 'asd123', 2),
 (2, 'asd123', 3),
+(5, 'asd12312', 3),
+(6, 'asd12312', 4),
 (3, 'asd1234', 3),
-(4, 'asd1234', 4);
+(4, 'asd1234', 4),
+(7, 'pl285', 2),
+(8, 'pl285', 4);
 
 -- --------------------------------------------------------
 
@@ -124,8 +134,13 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`codigo`, `nombre`, `cod_bodega`, `cod_sucursal`, `cod_moneda`, `precio`, `descripcion`) VALUES
+('1EJAJBI7', 'ZACARIAS JARA', 1, 1, 2, 21.31, 'madera de color cafe'),
+('1EJAJBI7asd', 'CRISTIAN ALEJANDRO TORRES TORRES', 1, 2, 2, 12.31, 'asdasdsadadsaddsadsadadsads'),
+('a1EJAJBI7', 'Prueba', 2, 3, 1, 12.31, 'madera de prueba12'),
 ('asd123', 'asd123asd', 1, 1, 1, 12.31, 'asdasdqwdqwdwqwddwqdwwdq dqxxdqdq'),
-('asd1234', 'asdasd', 1, 2, 1, 12, 'asdsadsadasadsadsadsadssd');
+('asd12312', 'asdasdasdas', 2, 4, 2, 12.31, 'wdqqlwdlqwkljdqwjkldwqdjqdjkqjlkwljkdqwlkjdqwklj'),
+('asd1234', 'asdasd', 1, 2, 1, 12, 'asdsadsadasadsadsadsadssd'),
+('pl285', 'Salmon', 2, 3, 1, 23.58, 'caja 400 lote 1500');
 
 -- --------------------------------------------------------
 
@@ -170,8 +185,8 @@ ALTER TABLE `materiales`
 --
 ALTER TABLE `material_producto`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `cod_producto` (`cod_producto`,`cod_material`),
-  ADD KEY `cod_material` (`cod_material`);
+  ADD KEY `cod_material` (`cod_material`),
+  ADD KEY `cod_producto` (`cod_producto`,`cod_material`) USING BTREE;
 
 --
 -- Indices de la tabla `moneda`
@@ -184,9 +199,9 @@ ALTER TABLE `moneda`
 --
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`codigo`),
-  ADD UNIQUE KEY `cod_bodega` (`cod_bodega`,`cod_sucursal`,`cod_moneda`),
   ADD KEY `cod_sucursal` (`cod_sucursal`),
-  ADD KEY `cod_moneda` (`cod_moneda`);
+  ADD KEY `cod_moneda` (`cod_moneda`),
+  ADD KEY `cod_bodega` (`cod_bodega`,`cod_sucursal`,`cod_moneda`) USING BTREE;
 
 --
 -- Indices de la tabla `sucursal`
@@ -208,7 +223,7 @@ ALTER TABLE `materiales`
 -- AUTO_INCREMENT de la tabla `material_producto`
 --
 ALTER TABLE `material_producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restricciones para tablas volcadas
