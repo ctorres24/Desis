@@ -7,7 +7,7 @@ $(document).ready(function () {
         enProceso: false,          
         alertaActiva: false,      
         ultimaValidacion: 0,       
-        tiempoMinimo: 200,         
+        tiempoMinimo: 100,         
         validacionesActivas: {}   
     };
     
@@ -43,7 +43,7 @@ $(document).ready(function () {
             validacionFlags.alertaActiva = true;
             setTimeout(function() {
                 validacionFlags.alertaActiva = false;
-            }, 200);
+            }, 100);
         }
     }
     
