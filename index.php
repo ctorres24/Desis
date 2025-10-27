@@ -112,7 +112,11 @@
             </div>
         </div>
     </form>
-    <script src="js/validaciones.js"></script>
+    <!-- Incluyendo el archivo de validaciones con eventos 'blur' -->
+    <!-- <script src="js/validaciones.js"></script> -->
+
+    <!-- Incluyendo el archivo de validaciones con eventos 'change' -->
+    <script src="js/validacionesChange.js"></script>
 </body>
 
 </html>
